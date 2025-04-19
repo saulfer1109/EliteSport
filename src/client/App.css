@@ -1,0 +1,542 @@
+/* App.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #130f40;
+  font-family: 'Lato', sans-serif;
+}
+
+.navbar-container {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #053a80; /* Gris para el navbar */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  font-family: 'Oswald', sans-serif;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  font-size: 17px;
+  margin-left: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fdffff; /* Azul claro */
+  font-weight: bold;
+  transition: color 0.3s;
+  font-family: 'Oswald', sans-serif;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+.search-cart-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-box {
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+}
+
+.input-search {
+  height: 30px;
+  width: 30px;
+  border-style: none;
+  padding: 20px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Oswald Bold 700', sans-serif;
+  letter-spacing: 1px;
+  outline: none;
+  border-radius: 25px;
+  transition: all 0.5s ease-in-out;
+  background-color: #ffffff;
+  padding-right: 40px;
+  color: #fff;
+}
+
+.input-search::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-family: 'Oswald Bold 700', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Oswald Bold 700', sans-serif;
+  letter-spacing: 1px;
+}
+
+.btn-search {
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  color: #ffffff;
+  background-color: transparent;
+  pointer-events: painted;
+}
+
+.btn-search:focus ~ .input-search {
+  width: 300px;
+  border-radius: 0;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+
+.input-search:focus {
+  width: 300px;
+  border-radius: 0;
+  background-color: transparent;
+  border-bottom: 1px solid hsl(0, 0%, 100%);
+  transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+}
+
+.material-icons {
+  color: #f0b65f;
+  cursor: pointer;
+  font-size: 30px;
+  transition: color 0.3s;
+}
+
+.material-icons:hover {
+  color: #ffffff;
+}
+
+.shopping-cart {
+  color: #f0b65f;
+  cursor: pointer;
+  font-size: 30px;
+  transition: color 0.3s;
+}
+
+.shopping-cart:hover {
+  color: #ffffff;
+}
+
+/* Actualiza el estilo del botón de "COMPRAR AHORA" para hacer el hover más específico */
+.shop-now-button {
+  font-family: 'Oswald', sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: #f0b65f;
+  background: transparent;
+  border: 2px solid #f0b65f;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10; /* Asegúrate de que esté encima de otros elementos */
+}
+
+.shop-now-button:hover {
+  color: #ffffff !important; /* Asegúrate de usar !important para garantizar la prioridad */
+  border-color: #ffffff !important; /* Cambiar el color del borde al pasar el ratón */
+}
+
+/*USER ICON*/
+
+.account-icon {
+  color: #f0b65f;
+  cursor: pointer;
+  font-size: 30px;
+  transition: color 0.3s;
+  margin-left: 10px; /* Añade espacio entre el icono de carrito de compras y el de cuenta */
+}
+
+.account-icon:hover {
+  color: #ffffff;
+}
+
+.generic-icon {
+  color: #36fff1;
+  cursor: pointer;
+  font-size: 30px;
+  transition: color 0.3s;
+  margin-left: 10px; /* Añade espacio entre el icono de carrito de compras y el de cuenta */
+}
+
+.generic-icon:hover {
+  color: #ffffff;
+}
+
+.generic-button{
+  color: #000000;
+  font-size: 15px;
+  font-family: 'Oswald', sans-serif;
+  background-color: #36fff1;
+  border-radius: 10px; /* Cambia 10px al valor que prefieras */
+  border: none; /* Opcional, para eliminar cualquier borde predeterminado */
+  padding: 5px 15px; /* Opcional, para ajustar el tamaño del botón */
+  margin-top: 10px;
+}
+
+.generic-crud-button{
+  color: #000000;
+  font-size: 15px;
+  font-family: 'Oswald', sans-serif;
+  background-color: #36fff1;
+  border-radius: 10px; /* Cambia 10px al valor que prefieras */
+  border: none; /* Opcional, para eliminar cualquier borde predeterminado */
+  padding: 5px 15px; /* Opcional, para ajustar el tamaño del botón */
+  margin-top: 10px;
+  margin-left: auto;
+  margin-bottom: 10px;
+}
+
+.generic-button:hover {
+  background-color: #ffffff;
+}
+
+.generic-crud-button:hover {
+  background-color: #ffffff;
+}
+
+.modal-input {
+  width: 100%; /* Ajusta el ancho al contenedor */
+  padding: 10px; /* Espaciado interno */
+  margin: 8px 0; /* Espaciado entre los inputs */
+  border: 1px solid #ccc; /* Borde delgado */
+  border-radius: 5px; /* Esquinas redondeadas */
+  font-size: 16px; /* Tamaño de texto */
+  font-family: 'Oswald', sans-serif; /* Fuente consistente */
+  box-sizing: border-box; /* Incluye padding y borde en el ancho */
+}
+
+.modal-input:focus {
+  border-color: #36fff1; /* Cambia el color del borde al enfocar */
+  outline: none; /* Quita el borde azul predeterminado */
+  box-shadow: 0 0 5px rgba(54, 255, 241, 0.5); /* Efecto de sombra */
+}
+
+.container {
+  margin-top: 200px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-family: 'Oswald', sans-serif;
+}
+
+h1 {
+  color: #333;
+  font-family: 'Oswald', sans-serif;
+}
+
+p {
+  color: #666;
+  font-family: 'Oswald', sans-serif;
+}
+
+
+/* CSS VISTA SHOP */
+
+body, html {
+  overflow-x: hidden;  /* Evitar desplazamiento horizontal */
+}
+
+.shop-container {
+  padding: 20px;
+  background-color: #000000; /* Fondo negro */
+  min-height: calc(100vh - 80px);
+  width: 100vw;  /* Ajustar ancho para evitar desplazamiento */
+  overflow-x: hidden;
+}
+
+.shop-container {
+  padding: 20px;
+  background-color: #000; /* Fondo negro */
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shop-title {
+  color: #ffffff;
+  font-family: 'Oswald', sans-serif;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.products-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  overflow-y: auto; /* Permitir desplazamiento vertical */
+  padding-bottom: 20px;
+}
+
+.product-card {
+  background-color: #2c2f33; /* Fondo de cada tarjeta de producto */
+  border: 1px solid #ddd;
+  padding: 15px;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-image {
+  height: 200px;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.product-name {
+  font-size: 1.5rem;
+  color: #ffffff; /* Color blanco para el nombre del producto */
+  font-family: 'Oswald', sans-serif;
+}
+
+.product-price {
+  font-size: 1.25rem;
+  color: #36fff1; /* Azul claro */
+  font-weight: bold;
+}
+
+/* App.css - Estilo para el botón de chat */
+.custom-chat-button {
+  background-color: #000;
+  color: #36fff1;
+  border: 2px solid #36fff1;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.custom-chat-button:hover {
+  background-color: #36fff1;
+  color: #000;
+}
+
+/* Ejemplo de CSS basado en tu diseño */
+
+.admin-layout {
+  display: flex;
+}
+
+.admin-table-container {
+  margin-left: 200px; /* Espacio para la sidebar */
+  width: calc(100% - 200px); /* Ajustar ancho para no cubrir la barra lateral */
+  padding: 20px;
+  background-color: #000;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+  
+.card {
+  background-color: #1e1e1e; /* Fondo oscuro para tarjetas */
+  color: #00ffcc; /* Color principal */
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+}
+
+.table {
+  background-color: #1e1e1e;
+  color: #fff;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #333;
+  padding: 10px;
+}
+
+/* Personalización del widget de Dialogflow */
+df-messenger {
+  --df-messenger-button-titlebar-color: #36fff1; /* Cambia el color de la barra del título a negro */
+  --df-messenger-font-color: #ffffff; /* Cambia el color del texto */
+  --df-messenger-button-icon-color: #36fff1; /* Cambia el color del ícono del botón */
+  --df-messenger-user-message: #36fff1; /* Color del mensaje del usuario */
+  --df-messenger-bot-message: #000; /* Cambia el color del mensaje del bot a negro */
+  --df-messenger-bot-message-animation: #000; /* Cambia el color de la animación del mensaje del bot a negro */
+}
+
+/* Ajustes al botón del chat */
+df-messenger .df-messenger-launcher {
+  background-color: #000; /* Cambia el color de fondo del botón del chat */
+  border-radius: 50%; /* Cambia la forma del botón, por ejemplo a un círculo */
+}
+
+
+/* Ocultar el botón predeterminado de Dialogflow 
+df-messenger .df-messenger-launcher {
+  display: none !important;
+}*/
+
+/* Overlay animations */
+.fade-in {
+  animation: fadeIn 0.3s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Content animations */
+.slide-in {
+  animation: slideIn 0.3s forwards;
+}
+
+.slide-out {
+  animation: slideOut 0.3s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-30%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-30%);
+  }
+}
+
+/*CSS LOGIN Y REGISTER*/
+.auth-container {
+  width: 100vw; /* Aseguramos que el contenedor cubra el ancho completo de la ventana */
+  padding: 0; /* Eliminamos cualquier padding adicional */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000; /* Color de fondo negro para toda la vista */
+  margin: 0; /* Eliminamos márgenes */
+  overflow: hidden; /* Evitamos barras de desplazamiento innecesarias */
+}
+
+.auth-box {
+  background-color: #202020;
+  padding: 40px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.auth-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #36fff1;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #36fff1;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-footer {
+  margin-top: 15px;
+}
+
+.auth-link {
+  color: #36fff1;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-error {
+  color: red;
+  margin-bottom: 15px;
+}
