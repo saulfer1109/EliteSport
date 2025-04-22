@@ -540,3 +540,14 @@ df-messenger .df-messenger-launcher {
   color: red;
   margin-bottom: 15px;
 }
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.checkbox-group label {
+  font-size: 14px;
+  color: #fff;
+}

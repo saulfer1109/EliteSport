@@ -89,7 +89,7 @@ const Dashboard = () => {
             }}
           >
             <h2 style={{ fontSize: '18px', marginBottom: '10px' }}>VENTAS TOTALES</h2>
-            <p style={{ fontSize: '24px', fontWeight: 'bold' }}>${totalSales.toFixed(2)}</p>
+            <p style={{ fontSize: '24px', fontWeight: 'bold' }}>${(totalSales || 0).toFixed(2)}</p>
           </div>
           <div
             className="stat-box"

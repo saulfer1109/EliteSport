@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "",
+    "username": "root",
     "password": "",
-    "database": "hype_store",
+    "database": "elitesport",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

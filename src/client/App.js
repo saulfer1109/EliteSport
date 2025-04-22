@@ -12,8 +12,8 @@ import CartModal from './cartModal';
 import SearchResults from './SearchResults'; // Importamos la vista de resultados de búsqueda
 import ProductsTable from './productsTable';
 import TallasTable from './tallasTable';
-import Register from './Register';
-import Login from './Login';
+import Register from './register';
+import Login from './login';
 import UsersTable from './Usuarios/usersTable';
 import Checkout from './checkout';
 import Dashboard from './dashboard';

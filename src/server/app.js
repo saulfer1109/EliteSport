@@ -7,6 +7,8 @@ const db = require('./models'); // Importamos todos los modelos desde index.js
 const dashboardRoutes = require('./routes/dashboardRoutes'); // Rutas del dashboard
 const multer = require('multer'); // Middleware para manejo de archivos
 const path = require('path'); // Módulo para trabajar con rutas de archivos
+const router = express.Router();
+const fs = require('fs');
 
 // Importamos Sequelize y operadores
 const { Sequelize, DataTypes, Op } = require('sequelize'); // 'Op' se usa para operaciones avanzadas en consultas
@@ -22,10 +24,17 @@ const SECRET_KEY = 'tu_clave_secreta_segura'; // Definimos la clave secreta para
 // Configuración de Multer para manejo de archivos subidos
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'images/caps/'); // Directorio donde se guardarán las imágenes subidas
+    const uploadPath = path.join(__dirname, 'images/caps/'); // Ruta donde se guardarán las imágenes
+
+    // Verifica si la carpeta existe, si no, la crea
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true }); // Crea la carpeta y subcarpetas si no existen
+    }
+
+    cb(null, uploadPath); // Establece la carpeta de destino
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Asigna un nombre único a cada archivo usando la fecha actual y su extensión original
+    cb(null, Date.now() + path.extname(file.originalname)); // Asigna un nombre único al archivo
   },
 });
 
@@ -72,6 +81,9 @@ app.get('/api/productos/buscar', async (req, res) => {
     res.status(500).json({ error: 'Error al buscar productos' });
   }
 });
+
+// Servir imágenes estáticas
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // Ruta para obtener un producto por su ID
 app.get('/api/productos/:id_producto', async (req, res) => {
@@ -120,26 +132,25 @@ app.get('/api/productos/:id_producto/tallas', async (req, res) => {
   }
 });
 
-// Ruta para crear un nuevo producto
-app.post('/api/productos', async (req, res) => {
+// Ruta para crear un nuevo producto (con o sin imagen)
+app.post('/api/productos', upload.single('imagen'), async (req, res) => {
   try {
-    const { nombre_producto, descripcion, precio, stock } = req.body; // Obtenemos los datos del cuerpo de la solicitud
+    const { nombre_producto, descripcion, precio, stock } = req.body;
+    const imagen = req.file ? `/images/caps/${req.file.filename}` : null;
 
-    // Validación básica de datos
     if (!nombre_producto || !precio || isNaN(stock)) {
       return res.status(400).json({ error: 'Datos inválidos' });
     }
 
-    // Creamos el nuevo producto en la base de datos
     const nuevoProducto = await db.Producto.create({
       nombre_producto,
       descripcion,
       precio: parseFloat(precio),
       stock: parseInt(stock),
+      imagen,
     });
 
-    console.log('Producto creado:', nuevoProducto);
-    res.json(nuevoProducto); // Enviamos el producto creado
+    res.json(nuevoProducto);
   } catch (error) {
     console.error('Error al crear producto:', error);
     res.status(500).json({ message: 'Error al crear producto', error: error.message });
@@ -150,7 +161,7 @@ app.post('/api/productos', async (req, res) => {
 app.put('/api/productos/:id', async (req, res) => {
   try {
     const { id } = req.params; // Obtenemos el ID del producto a actualizar
-    const { nombre_producto, descripcion, precio, stock } = req.body; // Obtenemos los nuevos datos
+    const { nombre_producto, descripcion, precio, stock, imagen } = req.body; // Obtenemos los nuevos datos
 
     // Validación básica de datos
     if (!nombre_producto || !precio || isNaN(stock)) {
@@ -164,6 +175,7 @@ app.put('/api/productos/:id', async (req, res) => {
         descripcion,
         precio: parseFloat(precio),
         stock: parseInt(stock),
+        imagen,
       },
       { where: { id_producto: id } }
     );
@@ -277,6 +289,35 @@ app.post('/api/register', async (req, res) => {
   } catch (error) {
     console.error('Error al registrar usuario:', error);
     res.status(500).json({ message: 'Error al registrar usuario' });
+  }
+});
+
+module.exports = router;
+
+// Ruta para obtener las tallas asociadas a un producto por su ID
+app.get('/api/productos/:id_producto/tallas', async (req, res) => {
+  const { id_producto } = req.params;
+  try {
+    const tallasProductos = await db.TallasProductos.findAll({
+      where: { id_producto },
+    });
+
+    if (tallasProductos.length === 0) {
+      return res.status(404).send('No se encontraron tallas para este producto');
+    }
+
+    const idTallas = tallasProductos.map((tp) => tp.id_talla);
+
+    const tallas = await db.Tallas.findAll({
+      where: {
+        id_talla: idTallas,
+      },
+    });
+
+    res.json(tallas);
+  } catch (error) {
+    console.error('Error al obtener las tallas:', error);
+    res.status(500).send('Error al obtener las tallas');
   }
 });
 

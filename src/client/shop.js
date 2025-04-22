@@ -39,7 +39,7 @@ const Shop = () => {
               }}
             >
               <img
-                src={`/images/caps/${producto.id_producto}.jpeg`}
+                src={producto.imagen || '/images/default.jpg'} // Usa la columna `imagen` o una imagen por defecto
                 alt={producto.nombre_producto}
                 className="product-image"
                 style={{
