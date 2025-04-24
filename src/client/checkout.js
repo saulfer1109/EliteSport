@@ -55,7 +55,7 @@ const Checkout = () => {
       <div className="checkout-content" style={{ display: 'flex', maxWidth: '1200px', margin: '0 auto' }}>
         {/* Información de contacto y entrega */}
         <div className="checkout-left" style={{ flex: 1, marginRight: '20px' }}>
-          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#36fff1' }}>CONTACTO</h2>
+          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#083c84' }}>CONTACTO</h2>
           <input
             type="email"
             name="email"
@@ -65,7 +65,7 @@ const Checkout = () => {
             className="auth-input"
             style={{ width: '100%', marginBottom: '15px' }}
           />
-          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#36fff1' }}>ENTREGA</h2>
+          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#083c84' }}>ENTREGA</h2>
           <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
             <input
               type="text"
@@ -143,7 +143,7 @@ const Checkout = () => {
             style={{ width: '100%', marginBottom: '15px' }}
           />
 
-          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#36fff1' }}>PAGO</h2>
+          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#083c84' }}>PAGO</h2>
           <div className="payment-methods" style={{ marginBottom: '15px' }}>
             <label style={{ display: 'block', marginBottom: '10px' }}>
               <input
@@ -200,7 +200,7 @@ const Checkout = () => {
 
         {/* Resumen del carrito */}
         <div className="checkout-right" style={{ flex: 0.5, padding: '20px', backgroundColor: '#202020', borderRadius: '10px' }}>
-          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#36fff1' }}>Resumen del Pedido</h2>
+          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#083c84' }}>Resumen del Pedido</h2>
           <ul style={{ listStyle: 'none', padding: 0 }}>
             {cartItems.map((item, index) => (
               <li key={index} style={{ marginBottom: '15px', padding: '10px', backgroundColor: '#fff', borderRadius: '5px' }}>
@@ -222,7 +222,7 @@ const Checkout = () => {
               marginTop: '20px',
               width: '100%',
               padding: '15px',
-              backgroundColor: '#36fff1',
+              backgroundColor: '#083c84',
               color: '#000',
               fontWeight: 'bold',
               border: 'none',

@@ -97,11 +97,11 @@ const Product = () => {
           />
         </div>
         <div style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
-          <h1 style={{ color: '#36fff1', fontSize: '2.5rem', marginBottom: '20px' }}>{producto.nombre_producto}</h1>
+          <h1 style={{ color: '#ffffff', fontSize: '2.5rem', marginBottom: '20px' }}>{producto.nombre_producto}</h1>
           <p style={{ fontSize: '1.2rem', lineHeight: '1.6', textAlign: 'justify', marginBottom: '20px' }}>
             {producto.descripcion}
           </p>
-          <p style={{ color: '#36fff1', fontSize: '2rem', fontWeight: 'bold', marginBottom: '20px' }}>
+          <p style={{ color: '#ffffff', fontSize: '2rem', fontWeight: 'bold', marginBottom: '20px' }}>
             Precio: ${producto.precio}
           </p>
           <div style={{ marginBottom: '20px' }}>
@@ -125,7 +125,7 @@ const Product = () => {
             <button onClick={() => setCantidad(cantidad + 1)} style={{ padding: '5px 15px', fontSize: '1rem', cursor: 'pointer' }}>+</button>
           </div>
           <div style={{ marginTop: '30px', display: 'flex', gap: '20px' }}>
-            <button onClick={agregarAlCarrito} style={{ backgroundColor: '#36fff1', color: '#000', padding: '15px 30px', fontSize: '1.2rem', fontWeight: 'bold', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+            <button onClick={agregarAlCarrito} style={{ backgroundColor: '#ffffff', color: '#000', padding: '15px 30px', fontSize: '1.2rem', fontWeight: 'bold', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
               AGREGAR AL CARRITO
             </button>
             <button style={{ backgroundColor: '#ffffff', color: '#000', padding: '15px 30px', fontSize: '1.2rem', fontWeight: 'bold', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
@@ -133,7 +133,7 @@ const Product = () => {
             </button>
           </div>
           {showAddedToCart && (
-            <div style={{ color: '#36fff1', fontSize: '1.2rem', fontWeight: 'bold', textAlign: 'center' }}>
+            <div style={{ color: '#ffffff', fontSize: '1.2rem', fontWeight: 'bold', textAlign: 'center' }}>
               Producto agregado a tu carrito de compras
             </div>
           )}

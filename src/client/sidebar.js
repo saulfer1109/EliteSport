@@ -24,7 +24,7 @@ const Sidebar = () => {
           to={link.to}
           style={{
             ...styles.link,
-            color: hoverIndex === index ? 'white' : '#00FFFF'
+            color: hoverIndex === index ? '#e0e0e0' : 'white'
           }}
           onMouseEnter={() => handleMouseEnter(index)}
           onMouseLeave={handleMouseLeave}
@@ -44,7 +44,7 @@ const styles = {
     padding: '20px',
     color: 'white',
     position: 'fixed',
-    top: 0,
+    top: 10,
     left: 0,
   },
   heading: {

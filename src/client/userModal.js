@@ -37,7 +37,7 @@ const UserModal = ({ isOpen, onClose, isAuthenticated, handleLogout }) => {
           right: 0,
           width: '400px',
           height: '100%',
-          backgroundColor: '#36fff1',
+          backgroundColor: '#2c2f33',
           color: '#000',
           padding: '20px',
           borderRadius: '10px 0 0 10px',
@@ -51,7 +51,7 @@ const UserModal = ({ isOpen, onClose, isAuthenticated, handleLogout }) => {
             alignItems: 'center',
           }}
         >
-          <h2 style={{ textAlign: 'center' }}>Usuario</h2>
+          <h2 style={{ textAlign: 'center' , color:'white'}}>Usuario</h2>
           <button
             onClick={onClose}
             style={{
@@ -59,6 +59,7 @@ const UserModal = ({ isOpen, onClose, isAuthenticated, handleLogout }) => {
               border: 'none',
               cursor: 'pointer',
               fontSize: '1.5em',
+              color: 'white',
             }}
           >
             &times;

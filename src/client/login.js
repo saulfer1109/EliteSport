@@ -49,7 +49,7 @@ const Login = ({ setIsAuthenticated }) => {
           onChange={(e) => setPassword(e.target.value)}
           className="auth-input"
         />
-        <button onClick={handleLogin} className="auth-button">INICIAR SESIÓN</button>
+        <button style={{ color: 'black' }} onClick={handleLogin} className="auth-button">INICIAR SESIÓN</button>
         <div className="auth-footer">
           <p>¿Olvidó su contraseña?</p>
           <p>¿No tienes una cuenta? <span onClick={() => navigate('/register')} className="auth-link">Crear cuenta</span></p>

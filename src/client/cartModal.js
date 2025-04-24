@@ -48,7 +48,7 @@ const CartModal = ({ isOpen, onClose }) => {
           right: 0,
           width: '400px',
           height: '100%',
-          backgroundColor: '#36fff1',
+          backgroundColor: '#2c2f33',
           color: '#000',
           padding: '20px',
           borderRadius: '10px 0 0 10px',
@@ -56,7 +56,7 @@ const CartModal = ({ isOpen, onClose }) => {
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>CARRITO DE COMPRAS</h2>
+          <h2 style={{ textAlign: 'center', marginBottom: '20px', color:'white'}}>CARRITO DE COMPRAS</h2>
           <FontAwesomeIcon icon={faTimes} style={{ cursor: 'pointer' }} onClick={onClose} />
         </div>
         {cartItems.length === 0 ? (
@@ -69,21 +69,23 @@ const CartModal = ({ isOpen, onClose }) => {
                 style={{
                   marginBottom: '15px',
                   padding: '10px',
-                  backgroundColor: '#fff',
-                  borderRadius: '5px',
+                  backgroundColor: '#1f2937',
+                  borderRadius: '10px',
+                  border: '2px solid black',
+                  color: 'white',
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <h4 style={{ color: '#000' }}>{item.nombre_producto}</h4>
-                    <p style={{ color: '#000' }}>Precio: ${item.precio}</p>
-                    <p style={{ color: '#000' }}>Talla: {item.talla}</p>
+                    <h4 style={{ color: 'white' }}>{item.nombre_producto}</h4>
+                    <p style={{ color: 'white' }}>Precio: ${item.precio}</p>
+                    <p style={{ color: 'white' }}>Talla: {item.talla}</p>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <button
                         onClick={() => handleQuantityChange(index, -1)}
                         style={{
                           backgroundColor: '#000',
-                          color: '#fff',
+                          color: 'white',
                           border: 'none',
                           padding: '5px 10px',
                           cursor: 'pointer',
@@ -91,12 +93,12 @@ const CartModal = ({ isOpen, onClose }) => {
                       >
                         -
                       </button>
-                      <span style={{ color: '#000', fontWeight: 'bold' }}>{item.cantidad}</span>
+                      <span style={{ color: 'white', fontWeight: 'bold' }}>{item.cantidad}</span>
                       <button
                         onClick={() => handleQuantityChange(index, 1)}
                         style={{
                           backgroundColor: '#000',
-                          color: '#fff',
+                          color: 'white',
                           border: 'none',
                           padding: '5px 10px',
                           cursor: 'pointer',

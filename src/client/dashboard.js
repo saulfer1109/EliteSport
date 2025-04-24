@@ -75,7 +75,7 @@ const Dashboard = () => {
           <div
             className="stat-box"
             style={{
-              backgroundColor: '#36fff1',
+              backgroundColor: '#1f2937',
               padding: '20px',
               margin: '10px',
               borderRadius: '8px',
@@ -86,15 +86,16 @@ const Dashboard = () => {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
+              border: '2px solid #374151'
             }}
           >
             <h2 style={{ fontSize: '18px', marginBottom: '10px' }}>VENTAS TOTALES</h2>
-            <p style={{ fontSize: '24px', fontWeight: 'bold' }}>${(totalSales || 0).toFixed(2)}</p>
+            <p style={{ fontSize: '24px', fontWeight: 'bold' , color: '#ffffff'}}>${(totalSales || 0).toFixed(2)}</p>
           </div>
           <div
             className="stat-box"
             style={{
-              backgroundColor: '#36fff1',
+              backgroundColor: '#1f2937',
               padding: '20px',
               margin: '10px',
               borderRadius: '8px',
@@ -105,10 +106,11 @@ const Dashboard = () => {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
+              border: '2px solid #374151'
             }}
           >
             <h2 style={{ fontSize: '18px', marginBottom: '10px' }}>ÓRDENES TOTALES</h2>
-            <p style={{ fontSize: '24px', fontWeight: 'bold' }}>{totalOrders}</p>
+            <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#ffffff'}}>{totalOrders}</p>
           </div>
         </div>
 
@@ -123,7 +125,7 @@ const Dashboard = () => {
               borderRadius: '4px',
               backgroundColor: '#000',
               color: '#fff',
-              border: '1px solid #36fff1',
+              border: '1px solid #1f2937',
             }}
           >
             <option value="">SELECCIONAR MES</option>
@@ -144,7 +146,7 @@ const Dashboard = () => {
             <div
               className="stat-box"
               style={{
-                backgroundColor: '#36fff1',
+                backgroundColor: '#1f2937',
                 padding: '20px',
                 margin: '20px 0',
                 borderRadius: '8px',

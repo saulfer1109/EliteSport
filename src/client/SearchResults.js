@@ -15,7 +15,7 @@ const SearchResults = () => {
             <Link to={`/producto/${producto.id_producto}`} key={producto.id_producto} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div className="product-card" style={{ backgroundColor: '#2c2f33', padding: '20px', borderRadius: '10px' }}>
                 <img
-                  src={`/images/caps/${producto.id_producto}.jpeg`}
+                  src={producto.imagen || '/images/default.jpg'}
                   alt={producto.nombre_producto}
                   className="product-image"
                   style={{
@@ -27,7 +27,7 @@ const SearchResults = () => {
                   }}
                 />
                 <h3 style={{ marginTop: '15px', color: '#fff' }}>{producto.nombre_producto}</h3>
-                <p style={{ color: '#36fff1', fontWeight: 'bold' }}>Precio: ${producto.precio}</p>
+                <p style={{ color: '#ffffff', fontWeight: 'bold' }}>Precio: ${producto.precio}</p>
               </div>
             </Link>
           ))}

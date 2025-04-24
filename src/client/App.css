@@ -25,7 +25,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #053a80; /* Gris para el navbar */
+  background-color: #121212; /* Gris para el navbar */
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   z-index: 100;
 }
@@ -195,7 +195,7 @@ body {
 }
 
 .generic-icon {
-  color: #36fff1;
+  color: #ffffff;
   cursor: pointer;
   font-size: 30px;
   transition: color 0.3s;
@@ -210,7 +210,7 @@ body {
   color: #000000;
   font-size: 15px;
   font-family: 'Oswald', sans-serif;
-  background-color: #36fff1;
+  background-color: #ffffff;
   border-radius: 10px; /* Cambia 10px al valor que prefieras */
   border: none; /* Opcional, para eliminar cualquier borde predeterminado */
   padding: 5px 15px; /* Opcional, para ajustar el tamaño del botón */
@@ -221,13 +221,13 @@ body {
   color: #000000;
   font-size: 15px;
   font-family: 'Oswald', sans-serif;
-  background-color: #36fff1;
+  background-color: #ffffff;
   border-radius: 10px; /* Cambia 10px al valor que prefieras */
   border: none; /* Opcional, para eliminar cualquier borde predeterminado */
   padding: 5px 15px; /* Opcional, para ajustar el tamaño del botón */
   margin-top: 10px;
   margin-left: auto;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .generic-button:hover {
@@ -250,7 +250,7 @@ body {
 }
 
 .modal-input:focus {
-  border-color: #36fff1; /* Cambia el color del borde al enfocar */
+  border-color: #ffffff; /* Cambia el color del borde al enfocar */
   outline: none; /* Quita el borde azul predeterminado */
   box-shadow: 0 0 5px rgba(54, 255, 241, 0.5); /* Efecto de sombra */
 }
@@ -339,15 +339,15 @@ body, html {
 
 .product-price {
   font-size: 1.25rem;
-  color: #36fff1; /* Azul claro */
+  color: #ffffff; /* Azul claro */
   font-weight: bold;
 }
 
 /* App.css - Estilo para el botón de chat */
 .custom-chat-button {
   background-color: #000;
-  color: #36fff1;
-  border: 2px solid #36fff1;
+  color: #ffffff;
+  border: 2px solid #ffffff;
   padding: 10px 20px;
   font-size: 1.2rem;
   font-weight: bold;
@@ -359,7 +359,7 @@ body, html {
 }
 
 .custom-chat-button:hover {
-  background-color: #36fff1;
+  background-color: #ffffff;
   color: #000;
 }
 
@@ -402,10 +402,10 @@ body, html {
 
 /* Personalización del widget de Dialogflow */
 df-messenger {
-  --df-messenger-button-titlebar-color: #36fff1; /* Cambia el color de la barra del título a negro */
+  --df-messenger-button-titlebar-color: #ffffff; /* Cambia el color de la barra del título a negro */
   --df-messenger-font-color: #ffffff; /* Cambia el color del texto */
-  --df-messenger-button-icon-color: #36fff1; /* Cambia el color del ícono del botón */
-  --df-messenger-user-message: #36fff1; /* Color del mensaje del usuario */
+  --df-messenger-button-icon-color: #ffffff; /* Cambia el color del ícono del botón */
+  --df-messenger-user-message: #ffffff; /* Color del mensaje del usuario */
   --df-messenger-bot-message: #000; /* Cambia el color del mensaje del bot a negro */
   --df-messenger-bot-message-animation: #000; /* Cambia el color de la animación del mensaje del bot a negro */
 }
@@ -502,7 +502,7 @@ df-messenger .df-messenger-launcher {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: #36fff1;
+  color: #ffffff;
 }
 
 .auth-input {
@@ -517,7 +517,7 @@ df-messenger .df-messenger-launcher {
 .auth-button {
   width: 100%;
   padding: 10px;
-  background-color: #36fff1;
+  background-color: #ffffff;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -531,7 +531,7 @@ df-messenger .df-messenger-launcher {
 }
 
 .auth-link {
-  color: #36fff1;
+  color: #ffffff;
   font-weight: bold;
   cursor: pointer;
 }

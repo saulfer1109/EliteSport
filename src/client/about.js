@@ -8,7 +8,7 @@ const About = () => {
       <Navbar />
       <div className="about-container" style={{ padding: '80px', backgroundColor: '#000', color: '#fff', fontFamily: 'Oswald', minHeight: '100vh', width: '100vw' }}>
         <div className="about-content" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h1 style={{color: '#36fff1', fontSize: '3rem', marginBottom: '30px', textAlign: 'center' }}>SOBRE NOSOTROS</h1>
+          <h1 style={{color: '#ffffff', fontSize: '3rem', marginBottom: '30px', textAlign: 'center' }}>SOBRE NOSOTROS</h1>
           <p style={{color: '#ffffff', fontSize: '1.5rem', lineHeight: '2', textAlign: 'justify', fontWeight: "bold"}}>
             Ubicado en el corazón de Hermosillo, Sonora, nuestro negocio se especializa en ofrecer las mejores gorras y accesorios para los amantes del estilo urbano. Fundado con pasión por la moda y la cultura local, nos dedicamos a brindar una experiencia única para todos aquellos que quieren expresar su personalidad a través de un accesorio esencial: la gorra.
           </p>

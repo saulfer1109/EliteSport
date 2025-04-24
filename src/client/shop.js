@@ -51,7 +51,7 @@ const Shop = () => {
                 }}
               />
               <h3 className="product-name" style={{ color: '#ffffff', fontSize: '1.8rem', marginBottom: '10px' }}>{producto.nombre_producto}</h3>
-              <p className="product-price" style={{ color: '#36fff1', fontSize: '1.5rem', fontWeight: 'bold' }}>${producto.precio}</p>
+              <p className="product-price" style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 'bold' }}>${producto.precio}</p>
             </div>
           </Link>
         ))}
