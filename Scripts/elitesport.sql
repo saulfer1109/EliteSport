@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2025 at 04:59 PM
+-- Generation Time: May 05, 2025 at 03:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -58,11 +58,10 @@ CREATE TABLE `productos` (
 
 INSERT INTO `productos` (`id_producto`, `nombre_producto`, `descripcion`, `precio`, `stock`, `imagen`, `fecha_creacion`) VALUES
 (1, 'Camisa', 'Camisa 1', 100.00, 50, NULL, '2025-04-19 23:32:56'),
-(2, 'shorts', 'a', 20.00, 10, NULL, '2025-04-19 23:34:21'),
-(3, 'boxers', 'boxers', 15.00, 999, NULL, '2025-04-19 23:34:45'),
-(4, 'Calcetas', '123', 1213.00, 20, NULL, '2025-04-20 00:59:16'),
-(5, 'Guantes', '1', 1.00, 1, NULL, '2025-04-20 01:01:03'),
-(6, 'test', '1', 1.00, 1, NULL, '2025-04-20 01:24:50');
+(2, 'shorts', 'a', 20.00, 10, '/images/products/1746409575708.avif', '2025-04-19 23:34:21'),
+(3, 'boxers', 'boxers', 15.00, 999, '/images/products/1746409666216.webp', '2025-04-19 23:34:45'),
+(4, 'Calcetas', '123', 1213.00, 20, '/images/products/1746409747666.jpg', '2025-04-20 00:59:16'),
+(5, 'Guantes', '1', 1.00, 1, '/images/products/1746409776271.avif', '2025-04-20 01:01:03');
 
 -- --------------------------------------------------------
 
@@ -120,7 +119,10 @@ CREATE TABLE `tallas_productos` (
 --
 
 INSERT INTO `tallas_productos` (`id`, `id_producto`, `id_talla`) VALUES
-(1, 1, 1);
+(5, 2, 1),
+(6, 2, 3),
+(11, 1, 1),
+(12, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -141,7 +143,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `email`, `password`, `roletype_id`) VALUES
-(2, 'ismael', 'ismaeldlr@hotmail.com', '$2b$10$96g28k6mt8ms03SCNETnbez6ff0/c/YM0qnoKrmi.2TCkM.HY5/eO', 2);
+(2, 'ismael', 'ismaeldlr@hotmail.com', '$2b$10$96g28k6mt8ms03SCNETnbez6ff0/c/YM0qnoKrmi.2TCkM.HY5/eO', 2),
+(3, 'test', 'test@test.com', '$2b$10$YGFCM3faEkssZ4j2yd91Q.0f1zpXfOmfd6az.cqpSILrVBQavxuLG', 2);
 
 -- --------------------------------------------------------
 
@@ -223,7 +226,7 @@ ALTER TABLE `detalle_ventas`
 -- AUTO_INCREMENT for table `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tallas`
@@ -235,13 +238,13 @@ ALTER TABLE `tallas`
 -- AUTO_INCREMENT for table `tallas_productos`
 --
 ALTER TABLE `tallas_productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ventas`
