@@ -83,7 +83,7 @@ app.post('/webhook', async (req, res) => {
       }
     } else if (intentName === 'Default Welcome Intent') {
       // Respuesta de bienvenida personalizada
-      responseText = '¡Hola! Bienvenido a Top Hype Store. ¿En qué podemos ayudarte?';
+      responseText = '¡Hola! Bienvenido a elitesport. ¿En qué podemos ayudarte?';
       customPayload = {
         "richContent": [
           [

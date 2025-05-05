@@ -402,10 +402,10 @@ body, html {
 
 /* Personalización del widget de Dialogflow */
 df-messenger {
-  --df-messenger-button-titlebar-color: #ffffff; /* Cambia el color de la barra del título a negro */
+  --df-messenger-button-titlebar-color: black; /* Cambia el color de la barra del título a negro */
   --df-messenger-font-color: #ffffff; /* Cambia el color del texto */
   --df-messenger-button-icon-color: #ffffff; /* Cambia el color del ícono del botón */
-  --df-messenger-user-message: #ffffff; /* Color del mensaje del usuario */
+  --df-messenger-user-message: gray; /* Color del mensaje del usuario */
   --df-messenger-bot-message: #000; /* Cambia el color del mensaje del bot a negro */
   --df-messenger-bot-message-animation: #000; /* Cambia el color de la animación del mensaje del bot a negro */
 }
@@ -551,3 +551,4 @@ df-messenger .df-messenger-launcher {
   font-size: 14px;
   color: #fff;
 }
+
