@@ -23,6 +23,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    imagen: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
     fecha_creacion: {
       type: DataTypes.DATE,
       allowNull: false,

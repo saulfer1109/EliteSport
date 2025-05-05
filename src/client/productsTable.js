@@ -96,7 +96,7 @@ const ProductsTable = () => {
 
   // Función para manejar la eliminación de un producto
   const handleDeleteProduct = (id) => {
-    fetch(`/api/productos/${id}`, { method: 'DELETE' })
+    fetch(`/api/productos/${id}/eliminar`, { method: 'DELETE' })
       .then(() => {
         // Actualizamos la lista de productos excluyendo el eliminado
         setProducts(products.filter((product) => product.id_producto !== id));
@@ -105,7 +105,6 @@ const ProductsTable = () => {
       .catch((error) => console.error('Error al eliminar el producto:', error));
   };
 
-  // Función para manejar la actualización de un producto
   const handleUpdateProduct = () => {
     const formData = new FormData();
     formData.append('nombre_producto', editingProduct.nombre_producto);
@@ -115,30 +114,27 @@ const ProductsTable = () => {
     if (editingProduct.imagen) {
       formData.append('imagen', editingProduct.imagen); // Agrega la imagen al FormData
     }
-
+  
     fetch(`/api/productos/${editingProduct.id_producto}`, {
       method: 'PUT',
       body: formData, // Enviamos el FormData
     })
-      .then(() => {
-        // Realiza una petición para actualizar las tallas asociadas al producto
-        fetch(`/api/productos/${editingProduct.id_producto}/tallas`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tallas: selectedSizes }),
-        })
-          .then(() => {
-            console.log('Tallas actualizadas correctamente');
-          })
-          .catch((error) => console.error('Error al actualizar tallas:', error));
-
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al actualizar el producto');
+        }
+        return response.json();
+      })
+      .then((updatedProduct) => {
+        console.log('Producto actualizado correctamente:', updatedProduct);
         setProducts(
           products.map((product) =>
-            product.id_producto === editingProduct.id_producto ? editingProduct : product
+            product.id_producto === updatedProduct.producto.id_producto
+              ? updatedProduct.producto
+              : product
           )
         );
         setEditingProduct(null);
-        setSelectedSizes([]); // Reinicia las tallas seleccionadas
         setIsModalOpen(false);
       })
       .catch((error) => console.error('Error al actualizar el producto:', error));

@@ -91,7 +91,7 @@ const Product = () => {
       <div className="product-content" style={{ maxWidth: '1400px', width: '85%', display: 'flex', gap: '40px', flexWrap: 'nowrap' }}>
         <div style={{ flex: '1' }}>
           <img
-            src={`/images/caps/${producto.id_producto}.jpeg`}
+            src={producto.imagen || '/images/default.jpg'}
             alt={producto.nombre_producto}
             style={{ width: '450px', height: '450px', borderRadius: '10px' }}
           />

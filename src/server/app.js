@@ -24,7 +24,7 @@ const SECRET_KEY = 'tu_clave_secreta_segura'; // Definimos la clave secreta para
 // Configuración de Multer para manejo de archivos subidos
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, 'images/caps/'); // Ruta donde se guardarán las imágenes
+    const uploadPath = path.join(__dirname, '../../public/images/products/'); // Ruta correcta
 
     // Verifica si la carpeta existe, si no, la crea
     if (!fs.existsSync(uploadPath)) {
@@ -158,34 +158,33 @@ app.post('/api/productos', upload.single('imagen'), async (req, res) => {
 });
 
 // Ruta para actualizar un producto existente
-app.put('/api/productos/:id', async (req, res) => {
+app.put('/api/productos/:id', upload.single('imagen'), async (req, res) => {
   try {
     const { id } = req.params; // Obtenemos el ID del producto a actualizar
-    const { nombre_producto, descripcion, precio, stock, imagen } = req.body; // Obtenemos los nuevos datos
+    const { nombre_producto, descripcion, precio, stock } = req.body; // Obtenemos los nuevos datos
+    const imagen = req.file ? `/images/products/${req.file.filename}` : null; // Ruta de la nueva imagen
 
     // Validación básica de datos
     if (!nombre_producto || !precio || isNaN(stock)) {
       return res.status(400).json({ error: 'Datos inválidos' });
     }
 
-    // Actualizamos el producto en la base de datos
-    const productoActualizado = await db.Producto.update(
-      {
-        nombre_producto,
-        descripcion,
-        precio: parseFloat(precio),
-        stock: parseInt(stock),
-        imagen,
-      },
-      { where: { id_producto: id } }
-    );
-
-    if (productoActualizado[0] > 0) {
-      console.log(`Producto con ID ${id} actualizado`);
-      res.json({ success: true }); // Confirmamos que la actualización fue exitosa
-    } else {
-      res.status(404).json({ error: 'Producto no encontrado' }); // Si no se encontró el producto, enviamos un error 404
+    // Buscar el producto en la base de datos
+    const producto = await db.Producto.findByPk(id);
+    if (!producto) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
     }
+
+    // Actualizar el producto en la base de datos
+    await producto.update({
+      nombre_producto,
+      descripcion,
+      precio: parseFloat(precio),
+      stock: parseInt(stock),
+      imagen: imagen || producto.imagen, // Mantén la imagen anterior si no se sube una nueva
+    });
+
+    res.json({ message: 'Producto actualizado correctamente', producto });
   } catch (error) {
     console.error('Error al actualizar producto:', error);
     res.status(500).json({ message: 'Error al actualizar producto', error: error.message });
@@ -193,7 +192,7 @@ app.put('/api/productos/:id', async (req, res) => {
 });
 
 // Ruta para eliminar un producto
-app.delete('/api/productos/:id', async (req, res) => {
+app.delete('/api/productos/:id/eliminar', async (req, res) => {
   try {
     const { id } = req.params; // Obtenemos el ID del producto a eliminar
     const deleted = await db.Producto.destroy({ where: { id_producto: id } }); // Eliminamos el producto
@@ -294,30 +293,26 @@ app.post('/api/register', async (req, res) => {
 
 module.exports = router;
 
-// Ruta para obtener las tallas asociadas a un producto por su ID
-app.get('/api/productos/:id_producto/tallas', async (req, res) => {
-  const { id_producto } = req.params;
+// Ruta para asociar tallas a un producto
+app.post('/api/productos/:id/tallas', async (req, res) => {
+  const { id } = req.params; // ID del producto
+  const { tallas } = req.body; // IDs de las tallas seleccionadas
+
   try {
-    const tallasProductos = await db.TallasProductos.findAll({
-      where: { id_producto },
-    });
+    // Elimina las tallas existentes para este producto
+    await db.TallasProductos.destroy({ where: { id_producto: id } });
 
-    if (tallasProductos.length === 0) {
-      return res.status(404).send('No se encontraron tallas para este producto');
-    }
+    // Inserta las nuevas tallas
+    const tallasProductos = tallas.map((id_talla) => ({
+      id_producto: id,
+      id_talla,
+    }));
+    await db.TallasProductos.bulkCreate(tallasProductos);
 
-    const idTallas = tallasProductos.map((tp) => tp.id_talla);
-
-    const tallas = await db.Tallas.findAll({
-      where: {
-        id_talla: idTallas,
-      },
-    });
-
-    res.json(tallas);
+    res.status(200).json({ message: 'Tallas asociadas correctamente' });
   } catch (error) {
-    console.error('Error al obtener las tallas:', error);
-    res.status(500).send('Error al obtener las tallas');
+    console.error('Error al asociar tallas:', error);
+    res.status(500).json({ message: 'Error al asociar tallas' });
   }
 });
 

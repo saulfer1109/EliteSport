@@ -7,19 +7,16 @@ const About = () => {
     <>
       <Navbar />
       <div className="about-container" style={{ padding: '80px', backgroundColor: '#000', color: '#fff', fontFamily: 'Oswald', minHeight: '100vh', width: '100vw' }}>
-        <div className="about-content" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h1 style={{color: '#ffffff', fontSize: '3rem', marginBottom: '30px', textAlign: 'center' }}>SOBRE NOSOTROS</h1>
-          <p style={{color: '#ffffff', fontSize: '1.5rem', lineHeight: '2', textAlign: 'justify', fontWeight: "bold"}}>
-            Ubicado en el corazón de Hermosillo, Sonora, nuestro negocio se especializa en ofrecer las mejores gorras y accesorios para los amantes del estilo urbano. Fundado con pasión por la moda y la cultura local, nos dedicamos a brindar una experiencia única para todos aquellos que quieren expresar su personalidad a través de un accesorio esencial: la gorra.
+        <div className="about-content" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <h1 style={{ color: '#ffffff', fontSize: '3rem', marginBottom: '30px', textAlign: 'center' }}>SOBRE NOSOTROS</h1>
+          <p style={{ color: '#ffffff', fontSize: '1.5rem', lineHeight: '2', textAlign: 'justify', fontWeight: "bold" }}>
+            En Elite Sport nos dedicamos a algo más que vender ropa deportiva: impulsamos un estilo de vida. Nacimos en Hermosillo con una visión clara: ofrecer prendas fitness de alta calidad que combinen rendimiento, estilo y exclusividad.
           </p>
-          <p style={{color: '#ffffff', fontSize: '1.5rem', lineHeight: '2', marginTop: '20px', textAlign: 'justify', fontWeight: "bold"}}>
-            Contamos con una amplia variedad de modelos, desde los clásicos que nunca pasan de moda hasta los más recientes lanzamientos de las marcas más reconocidas. Cada gorra es seleccionada cuidadosamente para asegurar calidad y estilo, ofreciendo algo para todos los gustos y edades.
+          <p style={{ color: '#ffffff', fontSize: '1.5rem', lineHeight: '2', marginTop: '20px', textAlign: 'justify', fontWeight: "bold" }}>
+            Cada pieza en nuestro catálogo ha sido seleccionada pensando en quienes entrenan con pasión y se esfuerzan por superarse. Nos enorgullece ser un punto de referencia para quienes buscan algo más que lo básico: buscan diseño, comodidad y presencia.
           </p>
-          <p style={{color: '#ffffff', fontSize: '1.5rem', lineHeight: '2', marginTop: '20px', textAlign: 'justify', fontWeight: "bold"}}>
-            Nuestro equipo está comprometido con la comunidad de Hermosillo y trabajamos constantemente para traer las mejores tendencias a nuestra ciudad. Más que un simple negocio, somos un punto de encuentro para aquellos que valoran la autenticidad y el buen diseño. Visítanos y descubre por qué nos hemos convertido en la tienda de referencia para las gorras más exclusivas en Sonora.
-          </p>
-          <p style={{color: '#ffffff', fontSize: '1.5rem', lineHeight: '2', marginTop: '20px', textAlign: 'justify', fontWeight: "bold"}}>
-            Ya sea que estés buscando una gorra para complementar tu outfit diario o un modelo especial para destacar en un evento, nuestro catálogo tiene algo para ti. Además, nuestro personal está siempre dispuesto a ayudarte a encontrar la gorra perfecta para tu estilo.
+          <p style={{ color: '#ffffff', fontSize: '1.5rem', lineHeight: '2', marginTop: '20px', textAlign: 'justify', fontWeight: "bold" }}>
+            Más que una tienda, somos una comunidad en crecimiento. Queremos acompañarte en tu camino, brindándote la mejor ropa fitness para que sigas avanzando, con la confianza de vestir con propósito.
           </p>
         </div>
       </div>

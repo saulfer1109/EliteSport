@@ -45,7 +45,7 @@ const Shop = () => {
                 style={{
                   width: '100%',
                   height: '350px',
-                  objectFit: 'cover',
+                  objectFit: 'contain',
                   marginBottom: '15px',
                   display: 'block',
                 }}

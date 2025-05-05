@@ -54,7 +54,7 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           className="auth-input"
         />
-        <button onClick={handleRegister} className="auth-button">CREAR CUENTA</button>
+        <button style={{ color: "Black" }} onClick={handleRegister} className="auth-button">CREAR CUENTA</button>
         <div className="auth-footer">
           <p>¿Ya tienes una cuenta? <span onClick={() => navigate('/login')} className="auth-link">Ingresar</span></p>
         </div>
