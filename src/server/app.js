@@ -43,11 +43,6 @@ const upload = multer({ storage }); // Inicializamos Multer con la configuració
 // Configuración de body-parser para analizar solicitudes entrantes en formato JSON
 app.use(bodyParser.json());
 
-// Conexión a la base de datos usando Sequelize
-//db.sequelize.authenticate()
-  //.then(() => console.log('Conexión a la base de datos establecida'))
-  //.catch((error) => console.error('Error de conexión:', error));
-
 // Servir archivos estáticos desde el directorio 'uploads'
 app.use('/uploads', express.static('uploads'));  
 
@@ -255,7 +250,7 @@ app.post('/api/login', async (req, res) => {
       { expiresIn: '1h' } // El token expirará en 1 hora
     );
 
-    res.status(200).json({ message: 'Inicio de sesión exitoso', token }); // Enviamos el token al cliente
+    res.status(200).json({ message: 'Inicio de sesión exitoso', token , id_usuario: user.id_usuario}); // Enviamos el token al cliente
   } catch (error) {
     console.error('Error al iniciar sesión:', error);
     res.status(500).json({ message: 'Error al iniciar sesión' });
@@ -333,6 +328,39 @@ const authenticateJWT = (req, res, next) => {
     res.status(401).json({ message: 'Autorización requerida' }); // Si no hay token, enviamos un error
   }
 };
+
+app.post('/api/ventas', async (req, res) => {
+  const { id_usuario, total, productos } = req.body; // Datos enviados desde el frontend
+
+  if (!id_usuario) {
+    return res.status(400).json({ message: 'El id_usuario es requerido' });
+  }
+
+  try {
+    // Crear la venta en la tabla 'ventas'
+    const nuevaVenta = await db.ventas.create({
+      id_usuario,
+      total,
+      fecha_venta: new Date(), // Fecha actual
+    });
+
+    // Crear los detalles de la venta en la tabla 'detalle_ventas'
+    const detalles = productos.map((producto) => ({
+      id_venta: nuevaVenta.id_venta,
+      id_producto: producto.id_producto,
+      cantidad: producto.cantidad,
+      precio_unitario: producto.precio,
+      subtotal: producto.cantidad * producto.precio,
+    }));
+
+    await db.detalle_ventas.bulkCreate(detalles);
+
+    res.status(201).json({ message: 'Venta registrada con éxito', venta: nuevaVenta });
+  } catch (error) {
+    console.error('Error al registrar la venta:', error);
+    res.status(500).json({ message: 'Error al registrar la venta', error: error.message });
+  }
+});
 
 // Configurar rutas del dashboard (posiblemente protegidas)
 app.use('/api/dashboard', dashboardRoutes);

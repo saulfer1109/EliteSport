@@ -43,6 +43,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // Importar modelos aquí
-db.ventas = require('./ventas')(sequelize, Sequelize.DataTypes); // Pasando `sequelize` y `DataTypes`
+db.ventas = require('./ventas')(sequelize, Sequelize.DataTypes); // Modelo de ventas
+db.detalle_ventas = require('./detalle_ventas')(sequelize, Sequelize.DataTypes); // Modelo de detalle_ventas
 
 module.exports = db;

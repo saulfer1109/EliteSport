@@ -40,6 +40,42 @@ const Checkout = () => {
     setPaymentMethod(method);
   };
 
+  const handlePayment = async () => {
+    const id_usuario = localStorage.getItem('userId'); // Obtén el ID del usuario desde el localStorage
+    const total = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  
+    const productos = cartItems.map((item) => ({
+      id_producto: item.id_producto,
+      cantidad: item.cantidad,
+      precio: item.precio,
+    }));
+  
+    console.log(localStorage.getItem('userId'));
+  
+    try {
+      const response = await fetch('/api/ventas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_usuario, total, productos }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error al registrar la venta');
+      }
+  
+      console.log('Venta registrada con éxito');
+  
+      // Limpiar el carrito
+      setCartItems([]); // Limpia el estado del carrito
+      localStorage.removeItem('cartItems'); // Elimina los datos del carrito del localStorage
+  
+      // Redirigir a la página de agradecimiento
+      navigate('/ThankYou');
+    } catch (error) {
+      console.error('Error al realizar el pago:', error);
+    }
+  };
+
   return (
     <div
       className="checkout-container"
@@ -55,7 +91,7 @@ const Checkout = () => {
       <div className="checkout-content" style={{ display: 'flex', maxWidth: '1200px', margin: '0 auto' }}>
         {/* Información de contacto y entrega */}
         <div className="checkout-left" style={{ flex: 1, marginRight: '20px' }}>
-          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#083c84' }}>CONTACTO</h2>
+          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#ffffff' }}>CONTACTO</h2>
           <input
             type="email"
             name="email"
@@ -65,7 +101,7 @@ const Checkout = () => {
             className="auth-input"
             style={{ width: '100%', marginBottom: '15px' }}
           />
-          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#083c84' }}>ENTREGA</h2>
+          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#ffffff' }}>ENTREGA</h2>
           <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
             <input
               type="text"
@@ -143,7 +179,7 @@ const Checkout = () => {
             style={{ width: '100%', marginBottom: '15px' }}
           />
 
-          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#083c84' }}>PAGO</h2>
+          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#ffffff' }}>PAGO</h2>
           <div className="payment-methods" style={{ marginBottom: '15px' }}>
             <label style={{ display: 'block', marginBottom: '10px' }}>
               <input
@@ -200,7 +236,7 @@ const Checkout = () => {
 
         {/* Resumen del carrito */}
         <div className="checkout-right" style={{ flex: 0.5, padding: '20px', backgroundColor: '#202020', borderRadius: '10px' }}>
-          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#083c84' }}>Resumen del Pedido</h2>
+          <h2 className="checkout-title" style={{ marginBottom: '20px', color: '#ffffff' }}>Resumen del Pedido</h2>
           <ul style={{ listStyle: 'none', padding: 0 }}>
             {cartItems.map((item, index) => (
               <li key={index} style={{ marginBottom: '15px', padding: '10px', backgroundColor: '#fff', borderRadius: '5px' }}>
@@ -218,11 +254,12 @@ const Checkout = () => {
             <h3 style={{ marginTop: '15px', fontSize: '20px' }}>Total: ${cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toFixed(2)}</h3>
           </div>
           <button
+            onClick={handlePayment}
             style={{
               marginTop: '20px',
               width: '100%',
               padding: '15px',
-              backgroundColor: '#083c84',
+              backgroundColor: '#ffffff',
               color: '#000',
               fontWeight: 'bold',
               border: 'none',

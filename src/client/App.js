@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './navbar';
@@ -17,16 +17,25 @@ import Login from './login';
 import UsersTable from './Usuarios/usersTable';
 import Checkout from './checkout';
 import Dashboard from './dashboard';
-
+import ThankYou from './ThankYou'; // Importamos la vista de agradecimiento
+import { jwtDecode } from 'jwt-decode'; // Cambia a una importación con nombre
 const App = () => {
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      setIsAuthenticated(true);
-      console.log('Usuario autenticado al cargar la aplicación');
+      try {
+        const decodedToken = jwtDecode(token); // Decodifica el token
+        localStorage.setItem('userId', decodedToken.id_usuario); // Guarda el id_usuario en el localStorage
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error('Error al decodificar el token:', error);
+        setIsAuthenticated(false);
+      }
     } else {
       console.log('Usuario no autenticado al cargar la aplicación');
     }
@@ -70,6 +79,7 @@ const App = () => {
             <Route path="/tallasTable" element={<TallasTable />} />
             <Route path="/Usuarios/usersTable" element={<UsersTable />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/ThankYou" element={<ThankYou />} />
           </Routes>
         </div>
         <ChatModal />
