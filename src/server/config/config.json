@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "",
+    "password": "qwerty123",
     "database": "elitesport",
-    "host": "127.0.0.1",
+    "host": "elitesport-db.cvkmsuky6hmr.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
