@@ -27,7 +27,8 @@ const Checkout = () => {
     }
 
     // Obtener los productos del carrito del local storage o cualquier otro almacenamiento
-    const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const storedItems = JSON.parse(localStorage.getItem('cartItems'));
+    console.log(storedItems);
     setCartItems(storedItems);
   }, [navigate]);
 
@@ -41,6 +42,8 @@ const Checkout = () => {
   };
 
   const handlePayment = async () => {
+    console.log('Estado actual de cartItems:', cartItems);
+  
     const id_usuario = localStorage.getItem('userId'); // Obtén el ID del usuario desde el localStorage
     const total = cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
   
@@ -50,7 +53,7 @@ const Checkout = () => {
       precio: item.precio,
     }));
   
-    console.log(localStorage.getItem('userId'));
+    console.log('Productos enviados al backend:', productos);
   
     try {
       const response = await fetch('/api/ventas', {

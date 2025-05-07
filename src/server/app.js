@@ -10,6 +10,9 @@ const path = require('path'); // Módulo para trabajar con rutas de archivos
 const router = express.Router();
 const fs = require('fs');
 
+const PORT = process.env.PORT || 3000;
+const PUBLIC_DIR = path.join(__dirname, '../../public');
+
 // Importamos Sequelize y operadores
 const { Sequelize, DataTypes, Op } = require('sequelize'); // 'Op' se usa para operaciones avanzadas en consultas
 
@@ -131,7 +134,7 @@ app.get('/api/productos/:id_producto/tallas', async (req, res) => {
 app.post('/api/productos', upload.single('imagen'), async (req, res) => {
   try {
     const { nombre_producto, descripcion, precio, stock } = req.body;
-    const imagen = req.file ? `/images/caps/${req.file.filename}` : null;
+    const imagen = req.file ? `/images/products/${req.file.filename}` : null;
 
     if (!nombre_producto || !precio || isNaN(stock)) {
       return res.status(400).json({ error: 'Datos inválidos' });
@@ -329,11 +332,16 @@ const authenticateJWT = (req, res, next) => {
   }
 };
 
+// Ruta para registrar una venta
 app.post('/api/ventas', async (req, res) => {
-  const { id_usuario, total, productos } = req.body; // Datos enviados desde el frontend
+  const { id_usuario, total, productos } = req.body;
 
   if (!id_usuario) {
     return res.status(400).json({ message: 'El id_usuario es requerido' });
+  }
+
+  if (!productos || !Array.isArray(productos) || productos.length === 0) {
+    return res.status(400).json({ message: 'Los productos son requeridos y deben ser un array' });
   }
 
   try {
@@ -341,7 +349,7 @@ app.post('/api/ventas', async (req, res) => {
     const nuevaVenta = await db.ventas.create({
       id_usuario,
       total,
-      fecha_venta: new Date(), // Fecha actual
+      fecha_venta: new Date(),
     });
 
     // Crear los detalles de la venta en la tabla 'detalle_ventas'
@@ -355,6 +363,22 @@ app.post('/api/ventas', async (req, res) => {
 
     await db.detalle_ventas.bulkCreate(detalles);
 
+    // Reducir el stock de los productos comprados
+    for (const producto of productos) {
+      const productoDB = await db.Producto.findByPk(producto.id_producto);
+      console.log('Datos recibidos en /api/ventas:', req.body);
+      if (!productoDB) {
+        return res.status(404).json({ message: `Producto con ID ${producto.id_producto} no encontrado` });
+      }
+
+      if (productoDB.stock < producto.cantidad) {
+        return res.status(400).json({ message: `Stock insuficiente para el producto ${productoDB.nombre_producto}` });
+      }
+
+      productoDB.stock -= producto.cantidad;
+      await productoDB.save();
+    }
+
     res.status(201).json({ message: 'Venta registrada con éxito', venta: nuevaVenta });
   } catch (error) {
     console.error('Error al registrar la venta:', error);
@@ -364,6 +388,14 @@ app.post('/api/ventas', async (req, res) => {
 
 // Configurar rutas del dashboard (posiblemente protegidas)
 app.use('/api/dashboard', dashboardRoutes);
+
+// Servir archivos estáticos del frontend (React)
+app.use(express.static(PUBLIC_DIR));
+
+// Para cualquier ruta que NO sea /api, devuelve index.html (SPA fallback)
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
+});
 
 // Iniciar el servidor en el puerto 3000
 app.listen(3000, () => {
