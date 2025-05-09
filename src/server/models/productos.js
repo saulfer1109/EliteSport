@@ -1,6 +1,7 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize'); // Agregar esta línea
+
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Producto', { // Cambié 'productos' a 'Producto'
+  return sequelize.define('Producto', {
     id_producto: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -16,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     precio: {
-      type: DataTypes.DECIMAL(10,2),
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false
     },
     stock: {
@@ -30,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     fecha_creacion: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: Sequelize.Sequelize.fn('current_timestamp')
+      defaultValue: Sequelize.fn('NOW') // Aquí se usa Sequelize
     }
   }, {
     sequelize,
@@ -41,10 +42,8 @@ module.exports = function(sequelize, DataTypes) {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
-        fields: [
-          { name: "id_producto" },
-        ]
-      },
+        fields: [{ name: "id_producto" }]
+      }
     ]
   });
 };

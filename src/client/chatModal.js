@@ -56,9 +56,10 @@ const ChatModal = () => {
   return (
     <div>
       <df-messenger
-        chat-title="Chatbot"
-        agent-id="599bec60-8666-4adf-9b15-2d557f391679"
+        project-id="chatbotelitesport-javq" // Este es el Project ID
         language-code="es"
+        chat-title="Chatbot EliteSport"
+        intent="Welcome"
       ></df-messenger>
     </div>
   );

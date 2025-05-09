@@ -1,125 +1,122 @@
-// webhook.js
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
+
+// Middleware para CORS
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080'); // Corrige esto si es necesario
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 
 app.use(bodyParser.json());
 
-// Configuración de la base de datos con Sequelize
-const sequelize = new Sequelize('hype_store', 'atepezano', 'atepezano1234', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
+// Importar modelo desde models/
+const db = require('./models');
+const Producto = db.Producto;
 
-// Definir el modelo de producto
-const Producto = sequelize.define('productos', {
-  id_producto: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  nombre_producto: DataTypes.STRING,
-  descripcion: DataTypes.TEXT,
-  precio: DataTypes.DECIMAL,
-  stock: DataTypes.INTEGER
-}, {
-  timestamps: false
-});
-
-// Webhook para Dialogflow
+// Ruta para Dialogflow
 app.post('/webhook', async (req, res) => {
-  const intentName = req.body.queryResult.intent.displayName;
-  const parameters = req.body.queryResult.parameters;
+  console.log('Solicitud recibida:', req.body);
 
-  let responseText = 'Lo siento, no tengo esa información en este momento. Escribe "Ayuda" para ver las opciones';
-  let customPayload = null;
+  const textoUsuario = req.body.message?.trim().toLowerCase(); // Mensaje del usuario
 
-  try {
-    if (intentName === 'ConsultarPrecios') {
-      const nombreProducto = parameters.producto;
-
-      // Consulta a la base de datos para obtener el precio del producto
-      const producto = await Producto.findOne({
-        where: { nombre_producto: nombreProducto }
-      });
-
-      if (producto) {
-        responseText = `El precio de ${nombreProducto} es $${producto.precio}.`;
-      } else {
-        responseText = `No encontré el producto llamado ${nombreProducto}. Escribe "Ayuda" para ver las opciones`;
-      }
-    } else if (intentName === 'ConsultarStock') {
-      const nombreProducto = parameters.producto;
-
-      // Consulta a la base de datos para obtener el stock del producto
-      const producto = await Producto.findOne({
-        where: { nombre_producto: nombreProducto }
-      });
-
-      if (producto) {
-        if (producto.stock > 0) {
-          responseText = `Sí, tenemos ${nombreProducto} disponible en stock.`;
-        } else {
-          responseText = `Lo siento, actualmente no tenemos ${nombreProducto} en stock.`;
-        }
-      } else {
-        responseText = `No encontré el producto llamado ${nombreProducto}. Escribe "Ayuda" para ver las opciones`;
-      }
-    } else if (intentName === 'FAQ') {
-      if (parameters.ubicacion) {
-        responseText = 'Nos ubicamos en Hermosillo, Sonora';
-      } else if (parameters.tiendas) {
-        responseText = 'Aún no contamos con sucursales físicas';
-      } else if (parameters.contacto) {
-        responseText = 'Puedes contactarnos vía mensaje directo de Instagram donde podrá atenderte un integrante de nuestro equipo';
-      } else if (parameters.devoluciones) {
-        responseText = 'Las devoluciones son válidas 20 días a partir de la compra, ya que contamos con garantía directa con el fabricante';
-      } else if (parameters.envios) {
-        responseText = 'Sí, contamos con envíos nacionales e internacionales';
-      } else {
-        responseText = 'Lo siento, no he recibido una pregunta válida. Escribe "Ayuda" para ver las opciones';
-      }
-    } else if (intentName === 'Default Welcome Intent') {
-      // Respuesta de bienvenida personalizada
-      responseText = '¡Hola! Bienvenido a elitesport. ¿En qué podemos ayudarte?';
-      customPayload = {
-        "richContent": [
-          [
-            {
-              "options": [
-                { "text": "¿Realizan envíos a todo el país?" },
-                { "text": "¿Cuál es su política de devoluciones?" },
-                { "text": "¿Cómo puedo contactarlos?" },
-                { "text": "¿Tienen tiendas físicas?" },
-                { "text": "¿Dónde están ubicados?" }
-              ],
-              "type": "chips"
-            }
-          ]
-        ]
-      };
-    }
-  } catch (error) {
-    console.error('Error al procesar la solicitud:', error);
-    responseText = 'Hubo un error al procesar tu solicitud, por favor intenta más tarde.';
+  if (!textoUsuario) {
+    return res.status(400).json({ reply: 'No recibí ningún mensaje válido.' });
   }
 
-  // Respuesta al webhook de Dialogflow
-  const response = customPayload
-    ? {
-        fulfillmentMessages: [
-          { text: { text: [responseText] } },
-          { payload: customPayload }
+  try {
+    // === BIENVENIDA ===
+    if (textoUsuario === 'hola' || textoUsuario.includes('bienvenido')) {
+      return res.json({
+        reply: '¡Hola! Bienvenido a EliteSport. ¿En qué puedo ayudarte hoy?',
+        options: [
+          'Ver productos',
+          'Consultar stock',
+          'Hablar con representante'
         ]
-      }
-    : { fulfillmentText: responseText };
+      });
 
-  res.json(response);
+    // === CONSULTAR STOCK DE PRENDAS ===
+    } else if (
+      textoUsuario.includes('cuantos') ||
+      textoUsuario.includes('stock') ||
+      textoUsuario.includes('hay')
+    ) {
+      const prendas = ['camisa', 'guantes', 'shorts', 'boxers', 'calcetas'];
+      const prenda = prendas.find(p => textoUsuario.includes(p));
+
+      if (prenda) {
+        const count = await Producto.count({
+          where: { nombre_producto: prenda }
+        });
+
+        if (count > 0) {
+          return res.json({
+            reply: `Actualmente hay ${count} ${prenda}(s) disponibles.`,
+            options: ['Ver más productos', 'Volver al inicio']
+          });
+        } else {
+          return res.json({
+            reply: `Lo siento, no encontré ninguna prenda llamada "${prenda}".`,
+            options: ['Buscar otra prenda', 'Volver al inicio']
+          });
+        }
+      } else {
+        return res.json({
+          reply: '¿De qué prenda hablas? Por ejemplo: camisa, guantes, shorts, boxers o calcetas.',
+          options: ['Buscar por nombre', 'Volver al inicio']
+        });
+      }
+
+    // === VER PRODUCTOS ===
+    } else if (textoUsuario.includes('ver productos')) {
+      const productos = await Producto.findAll();
+
+      let respuesta = 'Aquí tienes nuestras prendas:\n';
+      productos.forEach((p, i) => {
+        respuesta += `${i + 1}. ${p.nombre_producto} – $${p.precio} (Stock: ${p.stock})\n`;
+      });
+
+      return res.json({
+        reply: respuesta,
+        options: ['Ver stock', 'Volver al inicio']
+      });
+
+    // === OPCIONES ADICIONALES ===
+    } else if (textoUsuario.includes('volver') || textoUsuario.includes('inicio')) {
+      return res.json({
+        reply: '¿En qué puedo ayudarte ahora?',
+        options: ['Ver productos', 'Consultar stock', 'Hablar con representante']
+      });
+
+    // === DESPEDIDA ===
+    } else if (textoUsuario.includes('salir') || textoUsuario.includes('adiós')) {
+      return res.json({
+        reply: 'Gracias por tu visita. ¡Esperamos verte pronto!'
+      });
+
+    // === COMANDO NO RECONOCIDO ===
+    } else {
+      return res.json({
+        reply: 'No entendí eso. Puedes decir "hola" para comenzar.',
+        options: ['Iniciar chat', 'Salir']
+      });
+    }
+
+  } catch (error) {
+    console.error('Error al procesar la solicitud:', error);
+    return res.json({
+      reply: 'Hubo un problema al conectar con la base de datos.'
+    });
+  }
 });
 
-// Inicializar el servidor
 app.listen(PORT, () => {
-  console.log(`Servidor de webhook corriendo en el puerto ${PORT}`);
+  console.log(`✅ Servidor corriendo en puerto ${PORT}`);
 });

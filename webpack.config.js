@@ -7,7 +7,12 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
     publicPath: '/',
+  },externals: {
+    './build/env': 'commonjs ./build/env'
   },
+ 
+  mode: 'development',  // Cambia a 'production' para producción
+  devtool: 'source-map', // Genera un mapa de fuentes para facilitar la depuración    
   module: {
     rules: [
       {
@@ -80,4 +85,13 @@ module.exports = {
         },
       ],
     },
+    plugins: [
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^pg-hstore$/,
+      }),
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+        process: 'process/browser',
+      }),
+    ],
 };
