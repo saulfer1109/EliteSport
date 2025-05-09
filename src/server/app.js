@@ -227,11 +227,15 @@ app.put('/api/productos/:id', upload.single('imagen'), async (req, res) => {
   }
 });
 
-// Ruta para eliminar un producto
 app.delete('/api/productos/:id/eliminar', async (req, res) => {
   try {
     const { id } = req.params; // Obtenemos el ID del producto a eliminar
-    const deleted = await db.Producto.destroy({ where: { id_producto: id } }); // Eliminamos el producto
+
+    // Eliminar las relaciones en la tabla tallas_productos
+    await db.TallasProductos.destroy({ where: { id_producto: id } });
+
+    // Ahora elimina el producto
+    const deleted = await db.Producto.destroy({ where: { id_producto: id } });
 
     if (deleted) {
       console.log(`Producto con ID ${id} eliminado`);
