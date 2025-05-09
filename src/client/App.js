@@ -19,6 +19,7 @@ import Checkout from './checkout';
 import Dashboard from './dashboard';
 import ThankYou from './ThankYou'; // Importamos la vista de agradecimiento
 import { jwtDecode } from 'jwt-decode'; // Cambia a una importación con nombre
+import Chatbot from './Component/Chatbot';
 const App = () => {
   const [isCartModalOpen, setCartModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -86,8 +87,13 @@ const App = () => {
         <CartModal isOpen={isCartModalOpen} onClose={toggleCartModal} />
         {/* Ya no usamos UserModal aquí */}
       </div>
+      <div className="App">
+      
+      <Chatbot /> {/* Aquí se muestra el chatbot */}
+    </div>
     </Router>
   );
 };
+
 
 export default App;

@@ -9,22 +9,60 @@ const multer = require('multer'); // Middleware para manejo de archivos
 const path = require('path'); // Módulo para trabajar con rutas de archivos
 const router = express.Router();
 const fs = require('fs');
+const cors = require('cors');
+const webhookRouter = require('./webhookrouter'); // Ruta correcta a tu nuevo archivo
+const app = express();
 
-const PORT = process.env.PORT || 3000;
+//const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const PUBLIC_DIR = path.join(__dirname, '../../public');
 
 // Importamos Sequelize y operadores
 const { Sequelize, DataTypes, Op } = require('sequelize'); // 'Op' se usa para operaciones avanzadas en consultas
 
 // Creamos una instancia de Express
-const app = express();
 
 // Importamos bcrypt y jsonwebtoken para manejo de autenticación y seguridad
 const bcrypt = require('bcrypt'); // Librería para encriptar contraseñas
 const jwt = require('jsonwebtoken'); // Librería para crear y verificar tokens JWT
 const SECRET_KEY = 'tu_clave_secreta_segura'; // Definimos la clave secreta para JWT (debe almacenarse de forma segura)
 
-// Configuración de Multer para manejo de archivos subidos
+
+//const allowedOrigins = ['http://localhost:3000', 'http://localhost:8080'];
+const allowedOrigins = ['http://localhost:8080'];
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use(express.json());
+app.use('/webhook', webhookRouter); // Esto sí funciona si webhookRouter es un router de Express
+
+
+// Importar rutas personalizadas
+const tallasRoutes = require('./routes/tallasRoutes');
+const usuariosRoutes = require('./routes/usuariosRoutes');
+//const dashboardRoutes = require('./routes/dashboardRoutes');
+
+
+// Montar rutas
+app.use(tallasRoutes);
+app.use(usuariosRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+
+// ✅ Montar webhook después de todo lo demás
+
+
+
+
+// Configuración de Multer para manejo de archivos subido
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadPath = path.join(__dirname, '../../public/images/products/'); // Ruta correcta
@@ -212,16 +250,16 @@ app.delete('/api/productos/:id/eliminar', async (req, res) => {
 });
 
 // Importar rutas adicionales
-const tallasRoutes = require('./routes/tallasRoutes'); // Rutas relacionadas con tallas
+//const tallasRoutes = require('./routes/tallasRoutes'); // Rutas relacionadas con tallas
 
 // Usar las rutas importadas en la aplicación
-app.use(tallasRoutes);
+//app.use(tallasRoutes);
 
 // Importar rutas de usuarios
-const usuariosRoutes = require('./routes/usuariosRoutes'); // Rutas relacionadas con usuarios
+//const usuariosRoutes = require('./routes/usuariosRoutes'); // Rutas relacionadas con usuarios
 
 // Usar rutas de usuarios
-app.use(usuariosRoutes);
+//app.use(usuariosRoutes);
 
 /* RUTAS PARA USUARIOS */
 
@@ -391,7 +429,7 @@ app.post('/api/ventas', async (req, res) => {
 });
 
 // Configurar rutas del dashboard (posiblemente protegidas)
-app.use('/api/dashboard', dashboardRoutes);
+//app.use('/api/dashboard', dashboardRoutes);
 
 // Servir archivos estáticos del frontend (React)
 app.use(express.static(PUBLIC_DIR));
@@ -401,7 +439,10 @@ app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
 });
 
+
 // Iniciar el servidor en el puerto 3000
 app.listen(3000, () => {
-  console.log('Servidor en ejecución en el puerto 3000');
+  // ✅ Esto usará el valor real de PORT
+console.log(`Servidor en ejecución en el puerto ${PORT}`);
+
 });
