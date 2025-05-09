@@ -10,7 +10,7 @@ const path = require('path'); // Módulo para trabajar con rutas de archivos
 const router = express.Router();
 const fs = require('fs');
 const cors = require('cors');
-const webhookRouter = require('./webhookrouter'); // Ruta correcta a tu nuevo archivo
+const webhookRouter = require('./webhookRouter'); // Ruta correcta a tu nuevo archivo
 const app = express();
 
 //const PORT = process.env.PORT || 3000;
