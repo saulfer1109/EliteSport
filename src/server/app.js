@@ -10,7 +10,7 @@ const path = require('path'); // Módulo para trabajar con rutas de archivos
 const router = express.Router();
 const fs = require('fs');
 const cors = require('cors');
-const webhookRouter = require('./webhookRouter'); // Ruta correcta a tu nuevo archivo
+const webhookRouter = require('./routes/webhookRouter'); // Ruta correcta a tu nuevo archivo
 const app = express();
 
 //const PORT = process.env.PORT || 3000;
@@ -28,8 +28,15 @@ const jwt = require('jsonwebtoken'); // Librería para crear y verificar tokens 
 const SECRET_KEY = 'tu_clave_secreta_segura'; // Definimos la clave secreta para JWT (debe almacenarse de forma segura)
 
 
-//const allowedOrigins = ['http://localhost:3000', 'http://localhost:8080'];
-const allowedOrigins = ['http://localhost:8080'];
+const allowedOrigins = [
+  'https://elitesport.duckdns.org',   //  dominio público HTTPS
+  'http://elitesport.duckdns.org',    //  por si alguien entra sin https
+  'https://34.203.197.124/',
+  'https://34.203.197.124',
+  '34.203.197.124',           //  IP pública HTTPS
+  'http://localhost:8080'             //  para tu entorno de dev local
+];
+
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {

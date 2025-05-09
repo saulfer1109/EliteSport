@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('./models');
-const { frasesPrecio, frasesStock } = require('./utils/frases');
+const db = require('../models');
+const { frasesPrecio, frasesStock } = require('../utils/frases');
 
 // Ruta POST para el chatbot
 router.post('/', async (req, res) => {

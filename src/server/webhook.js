@@ -5,14 +5,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware para CORS
+const cors = require('cors');
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080'); // Corrige esto si es necesario
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-
+app.use(cors({
+  origin: '*', // Permitir todas las solicitudes (puedes restringirlo a dominios específicos)
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(bodyParser.json());
 

@@ -32,11 +32,10 @@ const Chatbot = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/webhook', {
+      const response = await fetch('/webhook', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
         },
         body: JSON.stringify({ message: text })
       });
